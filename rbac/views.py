@@ -22,3 +22,10 @@ def index_views(request):
 
     if request.method == 'POST':
         pass
+
+def welcome_views(request):
+    if request.method == 'GET':
+        return render(request, 'rbac/welcome.html')
+
+    if request.method == 'POST':
+        pass
