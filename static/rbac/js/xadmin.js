@@ -130,9 +130,21 @@ $(function () {
             var title = $(this).find('cite').html();
             var index  = $('.left-nav #nav li').index($(this));
 
+            // for (var i = 0; i <$('.x-iframe').length; i++) {
+            //     if($('.x-iframe').eq(i).attr('tab-id')==index+1){
+            //         tab.tabChange(index+1);
+            //         event.stopPropagation();
+            //         return;
+            //     }
+            // };
+
             for (var i = 0; i <$('.x-iframe').length; i++) {
                 if($('.x-iframe').eq(i).attr('tab-id')==index+1){
                     tab.tabChange(index+1);
+                    // 重复点击刷新
+                    num = index+1;
+                    $('iframe[tab-id='+num+']').attr('src',$('iframe[tab-id='+num+']').attr('src'));
+
                     event.stopPropagation();
                     return;
                 }

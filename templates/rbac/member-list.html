@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   
@@ -8,11 +9,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="{% static '/rbac/css/font.css' %}">
+    <link rel="stylesheet" href="{% static '/rbac/css/xadmin.css' %}">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="{% static '/rbac/lib/layui/layui.js' %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{% static '/rbac/js/xadmin.js' %}"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -23,10 +24,10 @@
   <body class="layui-anim layui-anim-up">
     <div class="x-nav">
       <span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">演示</a>
+        <a href="/rbac/index/" target="_parent">后台首页</a>
+        <a href="">权限管理中心</a>
         <a>
-          <cite>导航元素</cite></a>
+          <cite>用户列表</cite></a>
       </span>
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
@@ -42,7 +43,7 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','/rbac/member_add/')"><i class="layui-icon"></i>添加用户</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
       <table class="layui-table">
@@ -56,68 +57,80 @@
             <th>性别</th>
             <th>手机</th>
             <th>邮箱</th>
-            <th>地址</th>
+            <th>角色</th>
             <th>加入时间</th>
             <th>状态</th>
             <th>操作</th></tr>
         </thead>
         <tbody>
+          {% for user in allUsers %}
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td>1</td>
-            <td>小明</td>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ user.username }}</td>
             <td>男</td>
-            <td>13000000000</td>
-            <td>admin@mail.com</td>
-            <td>北京市 海淀区</td>
-            <td>2017-01-01 11:11:42</td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.email }}</td>
+            <td>{% for R in user.roles.all %}  {{ R.title }} {% endfor %}</td>
+            <td>{{ user.create_time }}</td>
             <td class="td-status">
-              <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
+              {% if user.status == 1 %}
+                <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
+              {% elif user.status == 0 %}
+                <span class="layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled">已停用</span>
+              {% endif %}
             <td class="td-manage">
-              <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
-                <i class="layui-icon">&#xe601;</i>
-              </a>
-              <a title="编辑"  onclick="x_admin_show('编辑','member-edit.html',600,400)" href="javascript:;">
+              {% if user.status == 1 %}
+                  <a onclick="member_stop(this,'10001')" href="javascript:;"  title="停用">
+                    <i class="layui-icon">&#xe62f;</i>
+                  </a>
+              {% elif user.status == 0 %}
+                  <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
+                    <i class="layui-icon">&#xe601;</i>
+                  </a>
+              {% endif %}
+              <a title="编辑"  onclick="x_admin_show('编辑','/rbac/member_edit/?username_id={{ user.id }}',600,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">
+              <a onclick="x_admin_show('修改密码','/rbac/member_password/?username_id={{ user.id }}',600,400)" title="修改密码" href="javascript:;">
                 <i class="layui-icon">&#xe631;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
+{#              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">#}
+{#                <i class="layui-icon">&#xe640;</i>#}
+{#              </a>#}
             </td>
           </tr>
-          <tr>
-            <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
-            <td>1</td>
-            <td>小明</td>
-            <td>男</td>
-            <td>13000000000</td>
-            <td>admin@mail.com</td>
-            <td>北京市 海淀区</td>
-            <td>2017-01-01 11:11:42</td>
-            <td class="td-status">
-              <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
-            <td class="td-manage">
-              <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
-                <i class="layui-icon">&#xe601;</i>
-              </a>
-              <a title="编辑"  onclick="x_admin_show('编辑','member-edit.html',600,400)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>
-              <a onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">
-                <i class="layui-icon">&#xe631;</i>
-              </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
-            </td>
-          </tr>
+          {% endfor %}
+{#          <tr>#}
+{#            <td>#}
+{#              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>#}
+{#            </td>#}
+{#            <td>1</td>#}
+{#            <td>小明</td>#}
+{#            <td>男</td>#}
+{#            <td>13000000000</td>#}
+{#            <td>admin@mail.com</td>#}
+{#            <td>北京市 海淀区</td>#}
+{#            <td>2017-01-01 11:11:42</td>#}
+{#            <td class="td-status">#}
+{#              <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>#}
+{#            <td class="td-manage">#}
+{#              <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">#}
+{#                <i class="layui-icon">&#xe601;</i>#}
+{#              </a>#}
+{#              <a title="编辑"  onclick="x_admin_show('编辑','member-edit.html',600,400)" href="javascript:;">#}
+{#                <i class="layui-icon">&#xe642;</i>#}
+{#              </a>#}
+{#              <a onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">#}
+{#                <i class="layui-icon">&#xe631;</i>#}
+{#              </a>#}
+{#              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">#}
+{#                <i class="layui-icon">&#xe640;</i>#}
+{#              </a>#}
+{#            </td>#}
+{#          </tr>#}
         </tbody>
       </table>
       <div class="page">
@@ -149,36 +162,100 @@
 
        /*用户-停用*/
       function member_stop(obj,id){
-          layer.confirm('确认要停用吗？',function(index){
+          layer.confirm('确认要'+$(obj).attr('title')+'吗？',function(index){
 
-              if($(obj).attr('title')=='启用'){
+            // using jQuery
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+              var username_id = $(obj).parents("tr").find(".layui-form-checkbox").attr("data-id")
+              console.log(username_id)
+
+              if($(obj).attr('title')=='停用'){
 
                 //发异步把用户状态进行更改
-                $(obj).attr('title','停用')
-                $(obj).find('i').html('&#xe62f;');
+                $.ajax({
+                    url:"/rbac/user_change_status/",
+                    data:{'username_id':username_id,'status':0},
+                    cache: false,
+                    traditional:true,
+                    type: "post",
+                    dataType:'json',
+                    success:function(status){
+                        console.log(status);
+                        if(status.status){
+                            $(obj).attr('title','启用')
+                            $(obj).find('i').html('&#xe601;');
 
-                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-                layer.msg('已停用!',{icon: 5,time:1000});
-
+                            $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+                            layer.msg('已停用!',{icon: 5,time:3000});
+                        }else{
+                            layer.msg(status.message, {icon:1,time:3000});
+                        }
+                    }
+                })
               }else{
-                $(obj).attr('title','启用')
-                $(obj).find('i').html('&#xe601;');
+                //发异步把用户状态进行更改
+                $.ajax({
+                    url:"/rbac/user_change_status/",
+                    data:{'username_id':username_id,'status':1},
+                    cache: false,
+                    traditional: true,
+                    type: "post",
+                    dataType: 'json',
+                    success: function (status) {
+                        console.log(status);
+                        if (status.status) {
+                            $(obj).attr('title','停用')
+                            $(obj).find('i').html('&#xe62f;');
 
-                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-                layer.msg('已启用!',{icon: 5,time:1000});
+                            $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+                            layer.msg('已启用!',{icon: 5,time:3000});
+                        } else {
+                            layer.msg(status.message, {icon: 1, time: 3000});
+                        }
+                    }
+                })
               }
-              
+
           });
       }
 
-      /*用户-删除*/
-      function member_del(obj,id){
-          layer.confirm('确认要删除吗？',function(index){
-              //发异步删除数据
-              $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
-          });
-      }
+{#      /*用户-删除*/#}
+{#      function member_del(obj,id){#}
+{#          layer.confirm('确认要删除吗？',function(index){#}
+{#              //发异步删除数据#}
+{#              $(obj).parents("tr").remove();#}
+{#              layer.msg('已删除!',{icon:1,time:1000});#}
+{#          });#}
+{#      }#}
 
 
 

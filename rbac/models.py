@@ -42,9 +42,13 @@ class User(models.Model):
     """
     用户表
     """
-    username = models.CharField(verbose_name='用户名',max_length=32)
-    password = models.CharField(verbose_name='密码',max_length=64)
-    email = models.CharField(verbose_name='邮箱',max_length=32)
+    username = models.CharField(verbose_name='用户名',max_length=32,unique=True)
+    phone = models.BigIntegerField(verbose_name='手机号码',unique=True)
+    email = models.CharField(verbose_name='邮箱',max_length=32,unique=True)
+    password = models.CharField(verbose_name='密码', max_length=64)
+    create_time = models.DateTimeField(verbose_name='创建时间',auto_now_add=True)
+    status = models.IntegerField(default=1,help_text='默认1,0代表禁用,1代表启用')
+    flag = models.IntegerField(default=0,help_text='默认0,0代表普通用户,1代表管理员')
 
     roles = models.ManyToManyField(verbose_name='具有的所有角色',to='Role',blank=True)
 
@@ -61,6 +65,7 @@ class Role(models.Model):
     """
     title = models.CharField(max_length=32)
     permissions = models.ManyToManyField(verbose_name='具有的所有权限',to='Permission',blank=True)
+    flag = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural = '角色表'

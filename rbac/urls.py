@@ -15,10 +15,23 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from views import login_views,index_views,welcome_views
+from views import *
 
 
 urlpatterns = [
     url(r'^login/$', login_views),
     url(r'^index/$',index_views),
     url(r'^welcome/$',welcome_views),
+    url(r'^member_list/$',member_list_views),
+    url(r'^member_add/$',member_add_views),
+    url(r'^member_edit/$',member_edit_views),
+    url(r'^member_password/$',member_password_views),
+    url(r'^admin_list/$',admin_list_views),
+    url(r'^admin_add/$',admin_add_views),
+    url(r'^admin_edit/$',admin_edit_views),
+    url(r'^user_change_status/$',user_change_status_views),
+    url(r'^order_list/$',order_list_views),
+    url(r'^unicode/$',unicode_views),
+    url(r'^admin_role/$',admin_role_views),
+    url(r'^admin_rule/$',admin_rule_views)
 ]
