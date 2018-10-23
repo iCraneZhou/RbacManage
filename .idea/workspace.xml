@@ -50,11 +50,17 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rbac/views.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
             <state relative-caret-position="141">
               <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
               <folding>
                 <element signature="e#24#63#0" expanded="true" />
               </folding>
+=======
+            <state relative-caret-position="646">
+              <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+              <folding />
+>>>>>>> local
             </state>
           </provider>
         </entry>
@@ -72,8 +78,13 @@
       <file leaf-file-name="member-edit.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/rbac/member-edit.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
             <state relative-caret-position="-1134">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+            <state relative-caret-position="884">
+              <caret line="52" column="5" lean-forward="false" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+>>>>>>> local
               <folding />
             </state>
           </provider>
@@ -92,8 +103,13 @@
       <file leaf-file-name="member-add.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/rbac/member-add.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
             <state relative-caret-position="368">
               <caret line="140" column="0" lean-forward="true" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
+=======
+            <state relative-caret-position="272">
+              <caret line="274" column="38" lean-forward="false" selection-start-line="274" selection-start-column="31" selection-end-line="274" selection-end-column="38" />
+>>>>>>> local
               <folding />
             </state>
           </provider>
@@ -169,11 +185,18 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+<<<<<<< master
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="606" />
     <option name="y" value="24" />
     <option name="width" value="1514" />
     <option name="height" value="728" />
+=======
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="404" />
+    <option name="width" value="1280" />
+    <option name="height" value="1040" />
+>>>>>>> local
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -207,8 +230,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< master
       <pane id="Scope" />
       <pane id="Scratches" />
+=======
+      <pane id="Scratches" />
+      <pane id="Scope" />
+>>>>>>> local
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -385,6 +413,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< master
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
@@ -399,6 +428,22 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37069923" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39955604" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+=======
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12899786" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25875705" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32963374" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.509434" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+>>>>>>> local
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -425,15 +470,75 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< master
     <entry file="file://$PROJECT_DIR$/static/rbac.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/templates/rbac/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="66" lean-forward="false" selection-start-line="12" selection-start-column="62" selection-end-line="12" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rbac/middlewares/rbac.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rbac/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <element signature="e#644#684#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RbacManage/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="52" column="5" lean-forward="false" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rbac/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="12" lean-forward="true" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+          <folding>
+            <element signature="e#24#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/rbac/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4658">
+          <caret line="274" column="38" lean-forward="false" selection-start-line="274" selection-start-column="31" selection-end-line="274" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rbac/service/init_permission.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="7" lean-forward="false" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/rbac.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="68">
           <caret line="4" column="2" lean-forward="true" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
         </state>
@@ -443,14 +548,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1904">
           <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+=======
+        <state relative-caret-position="51">
+          <caret line="3" column="22" lean-forward="false" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
+          <folding />
+>>>>>>> local
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/rbac/README.md" />
     <entry file="file://$PROJECT_DIR$/templates/rbac/role-add.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+        <state relative-caret-position="119">
+          <caret line="7" column="36" lean-forward="false" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
@@ -477,8 +592,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rbac/service/func_test_data.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="153">
           <caret line="9" column="50" lean-forward="false" selection-start-line="9" selection-start-column="46" selection-end-line="9" selection-end-column="50" />
+=======
+        <state relative-caret-position="272">
+          <caret line="192" column="58" lean-forward="false" selection-start-line="192" selection-start-column="58" selection-end-line="192" selection-end-column="58" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
@@ -493,6 +613,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2499">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+<<<<<<< master
         </state>
       </provider>
     </entry>
@@ -554,6 +675,8 @@
         <state relative-caret-position="323">
           <caret line="20" column="40" lean-forward="true" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
           <folding />
+=======
+>>>>>>> local
         </state>
       </provider>
     </entry>
@@ -566,30 +689,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/rbac/admin-rule.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="476">
           <caret line="94" column="18" lean-forward="false" selection-start-line="94" selection-start-column="18" selection-end-line="94" selection-end-column="18" />
           <folding />
+=======
+        <state relative-caret-position="119">
+          <caret line="7" column="36" lean-forward="false" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/rbac/admin-role.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="340">
           <caret line="74" column="20" lean-forward="false" selection-start-line="74" selection-start-column="14" selection-end-line="76" selection-end-column="18" />
           <folding />
+=======
+        <state relative-caret-position="238">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/rbac/order-list.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="391">
           <caret line="113" column="50" lean-forward="true" selection-start-line="113" selection-start-column="50" selection-end-line="113" selection-end-column="50" />
           <folding />
+=======
+        <state relative-caret-position="68">
+          <caret line="4" column="2" lean-forward="true" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/rbac/member-del.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
@@ -613,6 +752,15 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rbac/migrations/0003_role_flag.py">
+=======
+        <state relative-caret-position="1904">
+          <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/rbac/README.md" />
+    <entry file="file://$PROJECT_DIR$/templates/rbac/role-add.html">
+>>>>>>> local
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -621,8 +769,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rbac/migrations/0005_auto_20181019_1051.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+        <state relative-caret-position="439">
+          <caret line="85" column="22" lean-forward="false" selection-start-line="85" selection-start-column="13" selection-end-line="85" selection-end-column="22" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
@@ -636,6 +789,7 @@
     <entry file="file://$PROJECT_DIR$/rbac/migrations/0006_user_flag.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
+<<<<<<< master
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
@@ -652,6 +806,9 @@
         <state relative-caret-position="136">
           <caret line="38" column="24" lean-forward="true" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
           <folding />
+=======
+          <caret line="0" column="21" lean-forward="false" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
@@ -665,49 +822,79 @@
     </entry>
     <entry file="file://C:/Python27/Lib/site-packages/django/core/handlers/exception.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="408">
           <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
           <folding />
+=======
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
     <entry file="file://C:/Python27/Lib/site-packages/django/core/handlers/wsgi.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="307">
           <caret line="164" column="0" lean-forward="false" selection-start-line="164" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
           <folding />
+=======
+        <state relative-caret-position="153">
+          <caret line="9" column="50" lean-forward="false" selection-start-line="9" selection-start-column="46" selection-end-line="9" selection-end-column="50" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
     <entry file="file://C:/Python27/Lib/site-packages/django/core/servers/basehttp.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="171">
           <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
           <folding />
+=======
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
     <entry file="file://C:/Python27/Lib/wsgiref/handlers.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="171">
           <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding />
+=======
+        <state relative-caret-position="-2499">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
     <entry file="file://C:/Python27/Lib/site-packages/django/contrib/staticfiles/handlers.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="377">
           <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
           <folding />
+=======
+        <state relative-caret-position="170">
+          <caret line="10" column="28" lean-forward="false" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="28" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
     <entry file="file://C:/Python27/Lib/site-packages/django/core/handlers/base.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="384">
           <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
           <folding />
+=======
+        <state relative-caret-position="459">
+          <caret line="27" column="14" lean-forward="false" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+>>>>>>> local
         </state>
       </provider>
     </entry>
@@ -723,7 +910,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-510">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -737,6 +923,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/rbac/member-password.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="141">
           <caret line="126" column="33" lean-forward="true" selection-start-line="126" selection-start-column="33" selection-end-line="126" selection-end-column="33" />
           <folding />
@@ -755,6 +942,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1134">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+        <state relative-caret-position="646">
+          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+>>>>>>> local
           <folding />
         </state>
       </provider>
@@ -781,8 +972,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/rbac/member-list.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="296">
           <caret line="93" column="63" lean-forward="true" selection-start-line="93" selection-start-column="63" selection-end-line="93" selection-end-column="69" />
+=======
+        <state relative-caret-position="884">
+          <caret line="52" column="5" lean-forward="false" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+>>>>>>> local
           <folding />
         </state>
       </provider>
@@ -797,8 +993,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/rbac/member-add.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< master
         <state relative-caret-position="368">
           <caret line="140" column="0" lean-forward="true" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
+=======
+        <state relative-caret-position="272">
+          <caret line="274" column="38" lean-forward="false" selection-start-line="274" selection-start-column="31" selection-end-line="274" selection-end-column="38" />
+>>>>>>> local
           <folding />
         </state>
       </provider>

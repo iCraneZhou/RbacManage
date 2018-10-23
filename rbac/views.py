@@ -74,6 +74,10 @@ def member_add_views(request):
 
 def member_edit_views(request):
     if request.method == 'GET':
+        username_id = request.GET.get('username_id')
+        if username_id:
+            U = User.objects.get(id = username_id)
+            U_roles = U.roles.values()
         allRoles = Role.objects.filter(flag = 0)
         return render(request, 'rbac/member-edit.html',locals())
 
@@ -173,7 +177,11 @@ def admin_add_views(request):
 
 def admin_edit_views(request):
     if request.method == 'GET':
-        allRoles = Role.objects.filter(flag = 1)
+        username_id = request.GET.get('username_id')
+        if username_id:
+            U = User.objects.get(id=username_id)
+            U_roles = U.roles.values()
+        allRoles = Role.objects.filter(flag=1)
         return render(request, 'rbac/admin-edit.html',locals())
 
     if request.method == 'POST':
