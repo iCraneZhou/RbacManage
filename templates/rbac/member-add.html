@@ -124,20 +124,22 @@
                 $ = layui.jquery;
                 var form = layui.form
                     ,layer = layui.layer;
+
                 //监听提交
                 form.on('submit(add)', function(data){
                     var username,phone,email,password;
                     var roles = new Array();
-
-{#                  $.each(roletemp,function(index,item){#}
-{#                         roles += item;#}
-{#                    });#}
-
                     username    = $('input[name="username"]').val();
                     phone       = $('input[name="phone"]').val();
                     email       = $('input[name="email"]').val();
-                    roles       = $('input[name="role"]').val();
+                    roletemp       = $('input[name="role"]:checked');
+                    console.log(roletemp)
                     password    = $('input[name="pass"]').val();
+
+                    for(var i=0;i<roletemp.length;i++){
+                        roles.push($(roletemp[i]).val());
+                    }
+                    console.log(roles)
 
                     // using jQuery
                     function getCookie(name) {
@@ -171,7 +173,8 @@
                     });
 
                     // 用ajax向django传递的JavaScript数组，方法1，须配置django view 对应处理；数组格式：JSON.stringify([1,5])
-                    var str = JSON.stringify([1,5]);
+                    var str = JSON.stringify(roles);
+                    console.log(str)
 
                     $.ajax({
                         url:"/rbac/member_add/",

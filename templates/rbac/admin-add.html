@@ -64,7 +64,7 @@
               <label class="layui-form-label"><span class="x-red">*</span>角色</label>
               <div class="layui-input-block">
                 {% for R in allRoles %}
-                  <input type="checkbox" name="role" title="{{ R.title }}" value="{{ R.id }}" lay-skin="primary"{% if "超级管理员" in R.title %} checked="" {% endif %}>
+                  <input type="checkbox" name="role" title="{{ R.title }}" value="{{ R.id }}" lay-skin="primary"{% if "超级管理员" in R.title %} checked="checked" {% endif %}>
                 {% endfor %}
               </div>
           </div>
@@ -130,8 +130,8 @@
                     username    = $('input[name="username"]').val();
                     phone       = $('input[name="phone"]').val();
                     email       = $('input[name="email"]').val();
-                    roletemp    = $('input[name="role"]');
-                    //console.log(roletemp)
+                    roletemp    = $('input[name="role"]:checked');
+{#                    console.log(roletemp)#}
 
                     for(var i=0;i<roletemp.length;i++){
                         if ( i == 0){
@@ -189,13 +189,13 @@
                         success:function(status){
                             console.log(status);
                             if(status.status){
-                                layer.msg(status.message, {icon:1,time:3000},function () {
+                                layer.msg(status.message, {icon:1,time:2000},function () {
                                     parent.location.reload();
                                     var index = parent.layer.getFrameIndex(window.name);
                                     parent.layer.close(index);
                                 });
                             }else{
-                                layer.msg(status.message, {icon:1,time:3000});
+                                layer.msg(status.message, {icon:1,time:2000});
                             }
                         }
                     })

@@ -24,13 +24,25 @@
   <body>
     <div class="x-body">
         <form class="layui-form">
+          <div class="layui-form-item layui-hide">
+              <label for="username_id" class="layui-form-label">
+                  <span class="x-red">*</span>用户ID
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="username_id" name="username_id" required="" lay-verify="required"
+                  autocomplete="off" value="{{ U.id }}" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
           <div class="layui-form-item">
               <label for="username" class="layui-form-label">
                   <span class="x-red">*</span>登录名
               </label>
               <div class="layui-input-inline">
                   <input type="text" id="username" name="username" required="" lay-verify="required"
-                  autocomplete="off" value="admin" class="layui-input">
+                  autocomplete="off" value="{{ U.username }}" class="layui-input">
               </div>
               <div class="layui-form-mid layui-word-aux">
                   <span class="x-red">*</span>将会成为您的登入名之一
@@ -41,7 +53,7 @@
                   <span class="x-red">*</span>手机
               </label>
               <div class="layui-input-inline">
-                  <input type="text" value="18925139194" id="phone" name="phone" required="" lay-verify="phone"
+                  <input type="text" value="{{ U.phone }}" id="phone" name="phone" required="" lay-verify="phone"
                   autocomplete="off" class="layui-input">
               </div>
               <div class="layui-form-mid layui-word-aux">
@@ -53,7 +65,7 @@
                   <span class="x-red">*</span>邮箱
               </label>
               <div class="layui-input-inline">
-                  <input type="text" value="113664000@qq.com" id="L_email" name="email" required="" lay-verify="email"
+                  <input type="text" value="{{ U.email }}" id="L_email" name="email" required="" lay-verify="email"
                   autocomplete="off" class="layui-input">
               </div>
               <div class="layui-form-mid layui-word-aux">
@@ -64,7 +76,7 @@
               <label class="layui-form-label"><span class="x-red">*</span>角色</label>
               <div class="layui-input-block">
                 {% for R in allRoles %}
-                  <input type="checkbox" name="role" title="{{ R.title }}" value="{{ R.id }}" lay-skin="primary" {% for U_role in U_roles %}{% if U_role.id == R.id %} checked="" {% endif %} {% endfor %} >
+                  <input type="checkbox" name="role" title="{{ R.title }}" value="{{ R.id }}" lay-skin="primary" {% for U_role in U_roles %}{% if U_role.id == R.id %} checked="checked" {% endif %} {% endfor %} >
                 {% endfor %}
               </div>
           </div>
@@ -72,9 +84,10 @@
               <label for="L_repass" class="layui-form-label">
               </label>
               <button  class="layui-btn" lay-filter="add" lay-submit="">
-                  更改用户信息
+                  更改管理员信息
               </button>
           </div>
+          {% csrf_token %}
       </form>
     </div>
     <script>
@@ -100,19 +113,88 @@
 
           //监听提交
           form.on('submit(add)', function(data){
-            console.log(data);
-            //发异步，把数据提交给php
-            layer.alert("增加成功", {icon: 6},function () {
-                // 获得frame索引
-                var index = parent.layer.getFrameIndex(window.name);
-                //关闭当前frame
-                parent.layer.close(index);
+{#            console.log(data);#}
+
+            var username_id,username,phone,email,roles;
+            username_id = $('input[name="username_id"]').val();
+            username    = $('input[name="username"]').val();
+            phone       = $('input[name="phone"]').val();
+            email       = $('input[name="email"]').val();
+            roletemp    = $('input[name="role"]:checked');
+            console.log(roletemp)
+
+            for(var i=0;i<roletemp.length;i++){
+                if ( i == 0){
+                    roles = $(roletemp[i]).val();
+                }else {
+                    roles = roles + ',' + $(roletemp[i]).val();
+                }
+                //console.log($(roletemp[i]).val());
+            }
+            console.log(roles)
+            // 用ajax向django传递的JavaScript数组，方法2，须配置django view 对应处理；数组格式：roles = "1,2,3"
+            //roles = "1,2,3"
+
+            // using jQuery
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
             });
+
+            //发异步，把数据提交给php
+            $.ajax({
+                url:"/rbac/admin_edit/",
+                data:{'username_id':username_id,'username':username,'phone':phone,'email':email,'roles':roles},
+                cache: false,
+                traditional:true,
+                type: "post",
+                dataType:'json',
+                success:function(status){
+                    console.log(status);
+                    if(status.status){
+                        layer.msg(status.message, {icon:1,time:1000},function () {
+                            parent.location.reload();
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                        });
+                    }else{
+                        layer.msg(status.message, {icon:1,time:2000});
+                    }
+                }
+            })
+
             return false;
           });
-          
-          
+
         });
+
     </script>
     <script>var _hmt = _hmt || []; (function() {
         var hm = document.createElement("script");

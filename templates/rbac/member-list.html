@@ -44,7 +44,7 @@
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加用户','/rbac/member_add/')"><i class="layui-icon"></i>添加用户</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <span class="x-right" style="line-height:40px">共有数据：{{ countUser }} 条</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -52,9 +52,8 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>ID</th>
+            <th>序号</th>
             <th>用户名</th>
-            <th>性别</th>
             <th>手机</th>
             <th>邮箱</th>
             <th>角色</th>
@@ -66,11 +65,10 @@
           {% for user in allUsers %}
           <tr>
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{{ user.id }}'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td>{{ forloop.counter }}</td>
             <td>{{ user.username }}</td>
-            <td>男</td>
             <td>{{ user.phone }}</td>
             <td>{{ user.email }}</td>
             <td>{% for R in user.roles.all %}  {{ R.title }} {% endfor %}</td>
@@ -132,6 +130,7 @@
 {#            </td>#}
 {#          </tr>#}
         </tbody>
+        {% csrf_token %}
       </table>
       <div class="page">
         <div>
@@ -265,8 +264,57 @@
   
         layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
+
+            // using jQuery
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+            //发异步把用户状态进行更改
+            $.ajax({
+                url:"/rbac/user_batch_delete/",
+                data:{'username_ids':data},
+                cache: false,
+                traditional:true,
+                type: "post",
+                dataType:'json',
+                success:function(status){
+                    console.log(status);
+                    if(status.status){
+                        layer.msg('删除成功', {icon: 1});
+                        $(".layui-form-checked").not('.header').parents('tr').remove();
+                    }else{
+                        layer.msg(status.message, {icon:1,time:3000});
+                    }
+                }
+            })
+
         });
       }
     </script>

@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^admin_add/$',admin_add_views),
     url(r'^admin_edit/$',admin_edit_views),
     url(r'^user_change_status/$',user_change_status_views),
+    url(r'^user_batch_delete/$',user_batch_delete_views),
     url(r'^order_list/$',order_list_views),
     url(r'^unicode/$',unicode_views),
     url(r'^admin_role/$',admin_role_views),

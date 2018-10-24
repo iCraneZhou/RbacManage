@@ -37,7 +37,8 @@ def welcome_views(request):
 
 def member_list_views(request):
     if request.method == 'GET':
-        allUsers = User.objects.filter(flag = 0)
+        allUsers = User.objects.filter(flag = 0,flag_delete=0)
+        countUser = User.objects.filter(flag = 0,flag_delete=0).count()
         print(allUsers)
         return render(request, 'rbac/member-list.html',locals())
 
@@ -84,24 +85,48 @@ def member_edit_views(request):
     if request.method == 'POST':
         data = request.POST
         print(data)
+        username_id = int(data['username_id'])
         username = data['username']
         phone = data['phone']
-        password = data['password']
         email = data['email']
-        role_ids = json.loads(request.POST.getlist('roles')[0])  # 处理ajax传递过来的JavaScript数组，方法1，须配置ajax传参对应写法
-        print(role_ids)
-        status = {}
+        roles_id = json.loads(request.POST.getlist('roles')[0])  # 处理ajax传递过来的JavaScript数组，方法1，须配置ajax传参对应写法
+        print(roles_id)
+        message = {}
+
         try:
-            U = User.objects.create(username=username,phone=phone,password=password,email=email)
-            for id in role_ids:
-                U.roles.add(id)
-            status["status"] = 200
-            status["message"] = "添加用户成功"
-        except:
-            status["status"] = False
-            status["message"] = "添加用户失败"
-        print(status)
-        return HttpResponse(json.dumps(status))
+            U = User.objects.get(id=username_id)
+            U.username = username
+            U.phone = phone
+            U.email = email
+            U.save()
+            user_role_list = []
+
+            for user_role in U.roles.values():
+                user_role_list.append(user_role['id'])
+            print(user_role_list)
+
+            role_delete_list = [item for item in user_role_list if item not in roles_id]
+            print(role_delete_list)
+
+            role_add_list = [item for item in roles_id if item not in user_role_list]
+            print(role_add_list)
+
+            for role_id in role_delete_list:
+                U = User.objects.get(id=username_id)
+                U.roles.remove(role_id)
+
+            for role_id in role_add_list:
+                U = User.objects.get(id=username_id)
+                U.roles.add(role_id)
+
+            message["status"] = 200
+            message["message"] = "更改用户信息成功"
+        except Exception as e:
+            print(e)
+            message["status"] = False
+            message["message"] = "更改用户信息失败"
+        print(message)
+        return HttpResponse(json.dumps(message))
 
 
 def member_password_views(request):
@@ -139,7 +164,8 @@ def member_password_views(request):
 
 def admin_list_views(request):
     if request.method == 'GET':
-        allUsers = User.objects.filter(flag = 1)
+        allUsers = User.objects.filter(flag = 1,flag_delete=0)
+        countUser = User.objects.filter(flag = 1,flag_delete=0).count()
         print(allUsers)
         return render(request, 'rbac/admin-list.html',locals())
 
@@ -187,25 +213,48 @@ def admin_edit_views(request):
     if request.method == 'POST':
         data = request.POST
         print(data)
+        username_id = int(data['username_id'])
         username = data['username']
         phone = data['phone']
-        password = data['password']
         email = data['email']
         roles_id = data['roles'].split(',')   # 处理ajax传递过来的JavaScript数组，方法2，须配置ajax传参对应写法
-        flag = int(data['flag'])
         print(roles_id)
-        status = {}
+        message = {}
+
         try:
-            U = User.objects.create(username=username, phone=phone, password=password, email=email, flag=flag)
-            for id in roles_id:
-                U.roles.add(id)
-            status["status"] = 200
-            status["message"] = "添加用户成功"
-        except:
-            status["status"] = False
-            status["message"] = "添加用户失败"
-        print(status)
-        return HttpResponse(json.dumps(status))
+            U = User.objects.get(id=username_id)
+            U.username=username
+            U.phone=phone
+            U.email=email
+            U.save()
+            user_role_list = []
+
+            for user_role in U.roles.values():
+                user_role_list.append(user_role['id'])
+            print(user_role_list)
+
+            role_delete_list = [item for item in user_role_list if item not in roles_id]
+            print(role_delete_list)
+
+            role_add_list = [item for item in roles_id if item not in user_role_list]
+            print(role_add_list)
+
+            for role_id in role_delete_list:
+                U = User.objects.get(id=username_id)
+                U.roles.remove(role_id)
+
+            for role_id in role_add_list:
+                U = User.objects.get(id=username_id)
+                U.roles.add(role_id)
+
+            message["status"] = 200
+            message["message"] = "更改用户信息成功"
+        except Exception as e:
+            print(e)
+            message["status"] = False
+            message["message"] = "更改用户信息失败"
+        print(message)
+        return HttpResponse(json.dumps(message))
 
 
 def user_change_status_views(request):
@@ -226,7 +275,30 @@ def user_change_status_views(request):
         except:
             message["status"] = False
             message["message"] = "更改用户状态失败"
-        print(status)
+        print(message)
+        return HttpResponse(json.dumps(message))
+
+
+def user_batch_delete_views(request):
+    if request.method == 'GET':
+        pass
+
+    if request.method == 'POST':
+        data = request.POST
+        print(data)
+        username_ids = data.getlist('username_ids')
+        message = {}
+        try:
+            for id in username_ids:
+                U = User.objects.get(id=id)
+                U.flag_delete = 1
+                U.save()
+            message["status"] = 200
+            message["message"] = "册除用户成功"
+        except:
+            message["status"] = False
+            message["message"] = "册除用户失败"
+        print(message)
         return HttpResponse(json.dumps(message))
 
 
@@ -264,3 +336,4 @@ def admin_rule_views(request):
 
     if request.method == 'POST':
         pass
+
