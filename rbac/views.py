@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from models import User,Role,Permission
+from django.core.paginator import Paginator
 import json
 
 from django.shortcuts import render
@@ -37,13 +38,66 @@ def welcome_views(request):
 
 def member_list_views(request):
     if request.method == 'GET':
-        allUsers = User.objects.filter(flag = 0,flag_delete=0)
+        limit = 10
+        allUsers = User.objects.filter(flag = 0,flag_delete=0)[:limit]
         countUser = User.objects.filter(flag = 0,flag_delete=0).count()
         print(allUsers)
         return render(request, 'rbac/member-list.html',locals())
 
     if request.method == 'POST':
-        pass
+        data = request.POST
+        print(data)
+        page_id = int(data['page_id'])
+        limit = int(data['limit'])
+        print(limit,page_id)
+        status = {}
+
+        try:
+            countUser = User.objects.filter(flag=0, flag_delete=0).count()
+            last_page_id = countUser // limit + 1 if limit * ( countUser // limit ) < countUser else countUser // limit
+
+            if page_id == 1:
+                allUsers = User.objects.filter(flag=0, flag_delete=0).order_by("id")[:limit]
+            elif page_id == last_page_id:
+                offset_start = ( page_id - 1 ) * limit
+                allUsers = User.objects.filter(flag=0, flag_delete=0).order_by("id")[offset_start:]
+            else:
+                offset_start = ( page_id - 1 ) * limit
+                offset_end = page_id * limit
+                allUsers = User.objects.filter(flag=0, flag_delete=0).order_by("id")[offset_start:offset_end]
+
+            print(allUsers)
+
+            data = {}
+            n = 1
+            for U in allUsers:
+                data[n] = {
+                    'id':U.id,
+                    'username':U.username,
+                    'email':U.email,
+                    'phone':U.phone,
+                    'flag':U.flag,
+                    'create_time':U.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+                    'status':U.status,
+                    'flag_delete':U.flag_delete,
+                    'roles': [ R for R in U.roles.filter(status=1,flag=0).values('title')],
+                    #'roles':[ R.title for R in U.roles.filter(status=1,flag=0).all()]
+                }
+                n += 1
+            print(data)
+
+            status["data"] = data
+            status["countUser"] = countUser
+            status["status"] = 200
+            status["message"] = "分页查询成功"
+        except Exception as e:
+            print(e)
+            status["status"] = False
+            status["message"] = "分页查询失败"
+
+        print(status)
+        return HttpResponse(json.dumps(status))
+
 
 def member_add_views(request):
     if request.method == 'GET':
@@ -160,6 +214,53 @@ def member_password_views(request):
             message["message"] = "修改密码失败2"
         print(message)
         return HttpResponse(json.dumps(message))
+
+
+def member_search_views(request):
+    if request.method == 'GET':
+        pass
+
+    if request.method == 'POST':
+        data = request.POST
+        print(data)
+        start_time = data['start_time']
+        end_time = data['end_time']
+        username = data['username']
+        print(start_time,end_time,username)
+        status = {}
+
+        try:
+
+            allUsers = User.objects.filter(username__contains=username, flag=0, flag_delete=0,create_time__range=(start_time,end_time))
+
+            data = {}
+            n = 1
+            for U in allUsers:
+                data[n] = {
+                    'id':U.id,
+                    'username':U.username,
+                    'email':U.email,
+                    'phone':U.phone,
+                    'flag':U.flag,
+                    'create_time':U.create_time.strftime('%Y-%m-%d %H:%M:%S'),
+                    'status':U.status,
+                    'flag_delete':U.flag_delete,
+                    'roles': [ R for R in U.roles.filter(status=1,flag=0).values('title')],
+                    #'roles':[ R.title for R in U.roles.filter(status=1,flag=0).all()]
+                }
+                n += 1
+            print(data)
+
+            status["data"] = data
+            status["status"] = 200
+            status["message"] = "搜索查询成功"
+        except Exception as e:
+            print(e)
+            status["status"] = False
+            status["message"] = "搜索查询失败"
+
+        print(status)
+        return HttpResponse(json.dumps(status))
 
 
 def admin_list_views(request):

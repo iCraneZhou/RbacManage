@@ -61,7 +61,7 @@
             <th>状态</th>
             <th>操作</th></tr>
         </thead>
-        <tbody>
+        <tbody id="pagelist">
           {% for user in allUsers %}
           <tr>
             <td>
@@ -77,7 +77,7 @@
               {% if user.status == 1 %}
                 <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
               {% elif user.status == 0 %}
-                <span class="layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled">已停用</span>
+                <span class="layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled">已停用</span></td>
               {% endif %}
             <td class="td-manage">
               {% if user.status == 1 %}
@@ -132,32 +132,149 @@
         </tbody>
         {% csrf_token %}
       </table>
-      <div class="page">
-        <div>
-          <a class="prev" href="">&lt;&lt;</a>
-          <a class="num" href="">1</a>
-          <span class="current">2</span>
-          <a class="num" href="">3</a>
-          <a class="num" href="">489</a>
-          <a class="next" href="">&gt;&gt;</a>
-        </div>
+      <div class="page" id="page">
+{#        <div>#}
+{#          <a class="prev" href="">&lt;&lt;</a>#}
+{#          <a class="num" href="">1</a>#}
+{#          <span class="current">2</span>#}
+{#          <a class="num" href="">3</a>#}
+{#          <a class="num" href="">489</a>#}
+{#          <a class="next" href="">&gt;&gt;</a>#}
+{#        </div>#}
       </div>
 
     </div>
     <script>
-      layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#start' //指定元素
-        });
+      layui.use(['laydate','form'], function() {
+          var laydate = layui.laydate;
+          var form = layui.form;
 
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#end' //指定元素
-        });
+          var start_time, end_time;
+          var curDate = new Date();
+          var preDate = new Date(curDate.getTime() - 24*60*60*1000*7);
+          curTime = curDate.toLocaleDateString().replace(/\//g,'-');
+          preTime = preDate.toLocaleDateString().replace(/\//g,'-');
+
+          //执行一个laydate实例
+          laydate.render({
+              elem: '#start', //指定元素
+              //done: console.log(value)
+              value: preTime,
+              done: function (value, date, endDate) {
+                  {#            console.log(value); //得到日期生成的值，如：2017-08-18#}
+                  {#            console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}#}
+                  {#            console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。#}
+              },
+          });
+
+          //执行一个laydate实例
+          laydate.render({
+              elem: '#end', //指定元素
+              value: curTime,
+          });
+
+          form.on('submit(sreach)', function (data) {
+              console.log(start_time, end_time);
+              console.log(data.field);
+
+              // using jQuery
+              function getCookie(name) {
+                  var cookieValue = null;
+                  if (document.cookie && document.cookie !== '') {
+                      var cookies = document.cookie.split(';');
+                      for (var i = 0; i < cookies.length; i++) {
+                          var cookie = jQuery.trim(cookies[i]);
+                          // Does this cookie string begin with the name we want?
+                          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                              break;
+                          }
+                      }
+                  }
+                  return cookieValue;
+              }
+
+              var csrftoken = getCookie('csrftoken');
+
+              function csrfSafeMethod(method) {
+                  // these HTTP methods do not require CSRF protection
+                  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+              }
+
+              $.ajaxSetup({
+                  beforeSend: function (xhr, settings) {
+                      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                      }
+                  }
+              });
+
+              if(typeof data.field.start == "undefined" || data.field.start == null || data.field.start == ""){
+                  start_time = preTime
+              }else {
+                  start_time = data.field.start
+              }
+
+              if(typeof data.field.end == "undefined" || data.field.end == null || data.field.end == ""){
+                  end_time = curTime
+              }else {
+                  end_time = data.field.end
+              }
+
+              $.ajax({
+                  url: "/rbac/member_search/",
+                  data: {'start_time': start_time, 'end_time': end_time, 'username': data.field.username},
+                  cache: false,
+                  traditional: true,
+                  type: "post",
+                  dataType: 'json',
+                  success: function (status) {
+                      console.log(status);
+                      if (status.status) {
+                          var data_json = status.data;
+                          $("#pagelist").empty();
+                          $("#page").empty();
+                          $.each(data_json, function (i, item) {
+                              var vfields = item;  //这里不定义也行，在下面的调用中直接使用item，请忽略我不规范的缩进
+                              var str_status, str_status_ico;
+                              var roles = '';
+                              if (item.status == 1) {
+                                  str_status = '<span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>'
+                                  str_status_ico = '<a onclick="member_stop(this,\'10001\')" href="javascript:;"  title="停用"><i class="layui-icon">&#xe62f;</i></a>'
+                              } else {
+                                  str_status = '<span class="layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled">已停用</span></td>'
+                                  str_status_ico = '<a onclick="member_stop(this,\'10001\')" href="javascript:;"  title="启用"><i class="layui-icon">&#xe601;</i></a>'
+                              }
+
+                              $.each(vfields.roles, function (i, itme) {
+                                  roles = roles + ' ' + itme.title
+                              })
+
+                              $("#pagelist").append('<tr>'
+                                  + '<td><div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id=' + vfields.id + '><i class="layui-icon">&#xe605;</i></div></td>'
+                                  + '<td>' + i + '</td>'
+                                  + '<td>' + vfields.username + '</td>'
+                                  + '<td>' + vfields.phone + '</td>'
+                                  + '<td>' + vfields.email + '</td>'
+                                  + '<td>' + roles + '</td>'
+                                  + '<td>' + vfields.create_time + '</td>'
+                                  + '<td class="td-status">' + str_status
+                                  + '<td class="td-manage">' + str_status_ico
+                                  + '<a title="编辑"  onclick="x_admin_show(\'编辑\',\'/rbac/member_edit/?username_id=' + vfields.id + '\',800,600)" href="javascript:;"> <i class="layui-icon">&#xe642;</i> </a>'
+                                  + '<a onclick="x_admin_show(\'修改密码\',\'/rbac/member_password/?username_id=' + vfields.id + '\',600,400)" title="修改密码" href="javascript:;"> <i class="layui-icon">&#xe631;</i> </a> '
+                                  + '</td>'
+                                  + '</tr>');
+                          })
+                        } else {
+                          layer.msg(status.message, {icon: 1, time: 2000});
+                        }
+                  }
+              })
+              return false;
+          })
+
       });
+
 
        /*用户-停用*/
       function member_stop(obj,id){
@@ -317,13 +434,115 @@
 
         });
       }
+
+      //分页的实现
+      layui.use(['laypage', 'layer'], function() {
+          var laypage = layui.laypage
+              , layer = layui.layer;
+
+          // using jQuery
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+          laypage.render({
+            elem: 'page'
+            ,count: {{ countUser }} //数据总数
+            ,limit: 10
+            ,groups: 3
+            ,first: '首页'
+            ,last: '尾页'
+            ,layout: ['prev', 'page', 'next','count']
+            ,jump: function(obj, first) {
+                  //obj包含了当前分页的所有参数，比如：
+                  var page_id = obj.curr;
+                  var limit = obj.limit;
+                  console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                  console.log(obj.limit); //得到每页显示的条数
+
+                  //首次不执行
+                  if (!first) {
+                    //发异步把用户状态进行更改
+                    $.ajax({
+                        url:"/rbac/member_list/",
+                        data:{'page_id':page_id,'limit':limit},
+                        cache: false,
+                        traditional:true,
+                        type: "post",
+                        dataType:'json',
+                        success:function(status){
+                            console.log(status);
+                            if(status.status){
+                                var data_json = status.data;
+                                $("#pagelist").empty();
+                                 $.each(data_json, function (i, item ) {
+                                    var vfields = item;  //这里不定义也行，在下面的调用中直接使用item，请忽略我不规范的缩进
+                                    var str_status,str_status_ico;
+                                    var roles = '';
+                                    if ( item.status == 1 ){
+                                        str_status = '<span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>'
+                                        str_status_ico = '<a onclick="member_stop(this,\'10001\')" href="javascript:;"  title="停用"><i class="layui-icon">&#xe62f;</i></a>'
+                                    }else{
+                                        str_status = '<span class="layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled">已停用</span></td>'
+                                        str_status_ico = '<a onclick="member_stop(this,\'10001\')" href="javascript:;"  title="启用"><i class="layui-icon">&#xe601;</i></a>'
+                                    }
+
+                                    $.each(vfields.roles,function (i,itme) {
+                                        roles = roles + ' ' + itme.title
+                                    })
+
+                                    $("#pagelist").append('<tr>'
+                                    + '<td><div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id=' + vfields.id + '><i class="layui-icon">&#xe605;</i></div></td>'
+                                    + '<td>' + i + '</td>'
+                                    + '<td>' + vfields.username +'</td>'
+                                    + '<td>' + vfields.phone + '</td>'
+                                    + '<td>' + vfields.email + '</td>'
+                                    + '<td>' + roles + '</td>'
+                                    + '<td>' + vfields.create_time + '</td>'
+                                    + '<td class="td-status">' +  str_status
+                                    + '<td class="td-manage">' +  str_status_ico
+                                    + '<a title="编辑"  onclick="x_admin_show(\'编辑\',\'/rbac/member_edit/?username_id=' + vfields.id + '\',800,600)" href="javascript:;"> <i class="layui-icon">&#xe642;</i> </a>'
+                                    + '<a onclick="x_admin_show(\'修改密码\',\'/rbac/member_password/?username_id=' + vfields.id + '\',600,400)" title="修改密码" href="javascript:;"> <i class="layui-icon">&#xe631;</i> </a> '
+                                    + '</td>'
+                                    + '</tr>');
+                                })
+                            }else{
+                                layer.msg(status.message, {icon:1,time:2000});
+                            }
+                        }
+                    })
+                  }
+              }
+          });
+      });
+
     </script>
-    <script>var _hmt = _hmt || []; (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-      })();</script>
   </body>
 
 </html>

@@ -186,13 +186,13 @@
                         success:function(status){
                             console.log(status);
                             if(status.status){
-                                layer.msg(status.message, {icon:1,time:3000},function () {
+                                layer.msg(status.message, {icon:1,time:1000},function () {
                                     parent.location.reload();
                                     var index = parent.layer.getFrameIndex(window.name);
                                     parent.layer.close(index);
                                 });
                             }else{
-                                layer.msg(status.message, {icon:1,time:3000});
+                                layer.msg(status.message, {icon:1,time:1000});
                             }
                         }
                     })
